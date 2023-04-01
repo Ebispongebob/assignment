@@ -21,7 +21,6 @@ public class KvParser implements Parser {
     }
 
     private void preCheck(String command) {
-
         if (command.equalsIgnoreCase("--help")) {
             throw new GrammarException("get help");
         }
@@ -31,20 +30,35 @@ public class KvParser implements Parser {
         }
 
         String[] kv = command.split(" ");
-        if (kv.length != 3) {
+        if (kv.length < 1) {
             throw new GrammarException("command parse failed");
         }
-        String o = kv[0];
 
-        boolean flag = false;
+        String o          = kv[0];
+        Command operation = null;
         for (Command value : Command.values()) {
             if (value.getName().equalsIgnoreCase(o)) {
-                flag = true;
+                operation = value;
                 break;
             }
         }
-        if (!flag) {
+        if (operation == null) {
             throw new GrammarException("command key is not valid");
+        }
+
+        switch (operation) {
+        case GET:
+        case DEL:
+            if (kv.length != 2) {
+                throw new GrammarException("command not found");
+            }
+            break;
+        case SET:
+            if (kv.length != 3) {
+                throw new GrammarException("command not found");
+            }
+            break;
+        default:
         }
     }
 

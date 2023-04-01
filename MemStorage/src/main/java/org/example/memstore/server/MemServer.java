@@ -19,18 +19,17 @@ public class MemServer implements Closeable {
     private MemoryDatabase  md;
     private ExecutorService executorService;
 
-    public MemServer(int pall) throws SocketException {
-        init(pall);
+    public MemServer(int pall, int port) throws SocketException {
+        init(pall, port);
     }
 
     public void run() throws IOException, ExecutionException, InterruptedException {
         listen();
     }
 
-    private void init(int pall) throws SocketException {
+    private void init(int pall, int port) throws SocketException {
         // init socket
-        ds = new DatagramSocket(
-                Integer.parseInt(PropertiesUtil.getProperties(APPLICATION).getProperty(SERVER_PORT)));
+        ds = new DatagramSocket(port);
 
         // init db
         md = MemoryDatabase.MEMORY_DATABASE;

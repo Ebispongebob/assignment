@@ -54,30 +54,33 @@ public enum MemoryDatabase {
             return Constants.HELP;
         }
         String          operation        = okv[0];
-        String          key              = okv[1];
-        String          value            = okv[2];
         MemoryNameSpace currentNamespace = database[current];
         String tips;
 
         switch (Command.getTarget(operation)) {
         case SET:
-            if (currentNamespace.containsKey(key)) {
-                currentNamespace.replace(key, value);
+            if (currentNamespace.containsKey(okv[1])) {
+                currentNamespace.replace(okv[1], okv[2]);
             } else {
-                currentNamespace.put(key, value);
+                currentNamespace.put(okv[1], okv[2]);
             }
             tips = String.format(Constants.OK, "set");
             break;
         case GET:
-            String res = database[current].get(key);
+            String res = database[current].get(okv[1]);
             if (res == null || res.isEmpty()) {
-                tips = String.format(Constants.GET_ERROR, key);
+                tips = String.format(Constants.GET_ERROR, okv[1]);
             }else {
-                tips = database[current].get(key);
+                tips = res;
             }
             break;
         case DEL:
-            tips = String.format(Constants.OK, "set");
+            String del = database[current].remove(okv[1]);
+            if (del == null || del.isEmpty()) {
+                tips = String.format(Constants.GET_ERROR, okv[1]);
+            }else {
+                tips = String.format(Constants.OK, "del");
+            }
             break;
         default:
             throw new GrammarException("operation not allowed");
