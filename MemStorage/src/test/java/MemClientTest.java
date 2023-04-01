@@ -8,9 +8,4 @@ public class MemClientTest {
     public void autoSend() throws IOException {
         MemClient.autoSend();
     }
-
-    @Test
-    public void manualSend() {
-        MemClient.manualSend();
-    }
 }

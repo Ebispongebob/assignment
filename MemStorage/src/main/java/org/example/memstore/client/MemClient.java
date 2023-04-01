@@ -5,10 +5,19 @@ import java.net.*;
 import java.util.Scanner;
 
 public class MemClient {
+
+    public static void main(String[] args) {
+        manualSend();
+    }
+
     public static void manualSend() {
         try (DatagramSocket ds = new DatagramSocket()) {
             Scanner sc = new Scanner(System.in);
             while (sc.hasNextLine()) {
+                if (sc.next().equalsIgnoreCase("exit()")){
+                    sc.close();
+                    break;
+                }
                 String commandLine = sc.nextLine();
                 ds.setSoTimeout(1000);
                 ds.connect(InetAddress.getByName("localhost"), 9999);
