@@ -16,6 +16,10 @@ public class MemServer implements Closeable {
     private MemoryDatabase  md;
     private ExecutorService executorService;
 
+    /**
+     * @param pall thread number
+     * @param port listening port
+     */
     public MemServer(int pall, int port) throws SocketException {
         init(pall, port);
     }

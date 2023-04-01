@@ -7,6 +7,7 @@ public class MemServerBoot {
     public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
         try (MemServer memServer = new MemServer(3, 9999)) {
             memServer.run();
+            System.out.println("------ server running");
         }
     }
 }

@@ -5,11 +5,7 @@ import java.net.*;
 import java.util.Scanner;
 
 public class MemClient {
-    public static void main(String[] args) throws IOException {
-        autoSend();
-    }
-
-    private static void scannerSend() {
+    public static void manualSend() {
         try (DatagramSocket ds = new DatagramSocket()) {
             Scanner sc = new Scanner(System.in);
             while (sc.hasNextLine()) {
@@ -33,7 +29,7 @@ public class MemClient {
         }
     }
 
-    private static void autoSend() throws IOException {
+    public static void autoSend() throws IOException {
         DatagramSocket ds = new DatagramSocket();
         ds.setSoTimeout(1000);
         ds.connect(InetAddress.getByName("localhost"), 9999);
