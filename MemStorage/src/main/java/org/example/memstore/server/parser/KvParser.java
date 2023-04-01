@@ -6,7 +6,7 @@ import org.example.memstore.server.enums.Command;
 public class KvParser implements Parser {
 
     @Override
-    public String[] parse(String command) {
+    public String[] handle(String command) {
         try {
             // pre check param
             preCheck(command);
@@ -34,6 +34,7 @@ public class KvParser implements Parser {
             throw new GrammarException("command parse failed");
         }
 
+        // check operation
         String o          = kv[0];
         Command operation = null;
         for (Command value : Command.values()) {
@@ -46,6 +47,7 @@ public class KvParser implements Parser {
             throw new GrammarException("command key is not valid");
         }
 
+        // check key, value
         switch (operation) {
         case GET:
         case DEL:

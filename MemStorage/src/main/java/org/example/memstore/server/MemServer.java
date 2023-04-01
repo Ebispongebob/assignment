@@ -1,7 +1,6 @@
 package org.example.memstore.server;
 
 import org.example.memstore.server.mem.MemoryDatabase;
-import org.example.memstore.utils.PropertiesUtil;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -10,8 +9,6 @@ import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.*;
-
-import static org.example.memstore.common.Constants.*;
 
 public class MemServer implements Closeable {
 
@@ -62,6 +59,7 @@ public class MemServer implements Closeable {
     }
 
     private String submit0(String commandLine) throws ExecutionException, InterruptedException {
+        // submit command
         Future<String> submit = executorService.submit(() -> {
             System.out.println(Thread.currentThread().getName() + "is executing");
             return md.operationDatabase(commandLine);

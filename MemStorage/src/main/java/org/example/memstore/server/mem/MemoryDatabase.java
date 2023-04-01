@@ -10,14 +10,6 @@ public enum MemoryDatabase {
     // 0 ~ 15: save data; 16: default data
     MEMORY_DATABASE(new MemoryNameSpace[17], 0);
 
-    // init default data
-    static {
-        MEMORY_DATABASE.initDatabase(0);
-        MEMORY_DATABASE.initDatabase(16);
-        MemoryNameSpace memoryNameSpace = MEMORY_DATABASE.database[16];
-        memoryNameSpace.put("xx", "xx");
-    }
-
     private int current;
 
     private MemoryNameSpace[] database;
@@ -49,7 +41,8 @@ public enum MemoryDatabase {
     }
 
     public String operationDatabase(String commandLine) {
-        String[]        okv              = new KvParser().parse(commandLine);
+        // preCheck and parse
+        String[]        okv              = new KvParser().handle(commandLine);
         if (okv == null) {
             return Constants.HELP;
         }
@@ -57,6 +50,7 @@ public enum MemoryDatabase {
         MemoryNameSpace currentNamespace = database[current];
         String tips;
 
+        // handle command
         switch (Command.getTarget(operation)) {
         case SET:
             if (currentNamespace.containsKey(okv[1])) {
